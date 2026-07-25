@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self'; img-src 'self' data:">
+  <title>Kandecksky User Guide</title>
+  <link rel="stylesheet" href="help.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">
+    <svg width="20" height="20" viewBox="0 0 28 28">
+      <circle cx="14" cy="14" r="12" fill="none" stroke="#1255b8" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="7"  fill="none" stroke="#e8c020" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="2.5" fill="#cc2b14"/>
+    </svg>
+    User Guide
+  </div>
+  <a href="#overview">Overview</a>
+  <a href="#quick-start">Quick start</a>
+  <a href="#interface">The interface</a>
+  <div class="nav-group">Playing</div>
+  <a href="#transport">Transport &amp; clock</a>
+  <a href="#clip-grid">Clip grid</a>
+  <a href="#waveform-editor">Waveform editor</a>
+  <a href="#punktkunstwerk">Punktkunstwerk (granular)</a>
+  <div class="nav-group">Sound</div>
+  <a href="#mixer-fx">Mixer &amp; FX</a>
+  <a href="#audio-output">Audio output &amp; routing</a>
+  <a href="#record-export">Recording &amp; export</a>
+  <div class="nav-group">Machines</div>
+  <a href="#generative">Generative engine</a>
+  <a href="#performance">Performance tools</a>
+  <div class="nav-group">Connections</div>
+  <a href="#midi">MIDI &amp; controllers</a>
+  <a href="#osc">OSC &amp; DAW integration</a>
+  <div class="nav-group">Housekeeping</div>
+  <a href="#sets">Sets, set lists &amp; persistence</a>
+  <a href="#appearance">Palettes &amp; display</a>
+  <a href="#shortcuts">Keyboard shortcuts</a>
+  <a href="#troubleshooting">Troubleshooting</a>
+</nav>
+
+<main>
+  <h1>Kandecksky</h1>
+  <p class="subtitle">Live-performance clip launcher and granular instrument — user guide</p>
+
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>
+      Kandecksky is an audio looper meant to be played live. Most of the
+      window is a clip grid; the first column is a granular instrument. It is
+      <strong>controller-agnostic</strong>: any MIDI grid or pad controller
+      can drive it through controller profiles and MIDI Learn, it works fine
+      with just the mouse, and it can be automated over OSC. An Akai APC20
+      profile ships built in (<a href="#midi">MIDI &amp; controllers</a>).
+    </p>
+    <p>Under the hood:</p>
+    <ul>
+      <li>A native <strong>Rust audio engine</strong> with its own low-latency
+        audio stream, independent of the browser layer. Clips are mixed,
+        stretched, and effected in Rust; the interface only sends commands.</li>
+      <li><strong>BPM-synced playback</strong> — clips tagged with a tempo are
+        time-stretched (pitch preserved) to follow the master clock.</li>
+      <li>A <strong>generative engine</strong> that can play the grid for you:
+        euclidean rhythms, Markov chains, step sequencing, pattern mutation,
+        and cellular automata.</li>
+      <li>Sync as <strong>master or slave</strong>: MIDI Clock in or out, and
+        OSC transport/tempo exchange with your DAW.</li>
+    </ul>
+    <p>
+      It reads WAV, MP3, OGG, FLAC, AIFF, M4A, and AAC files.
+    </p>
+  </section>
+
+  <section id="quick-start">
+    <h2>Quick start</h2>
+    <ol>
+      <li><strong>Point the library at your samples.</strong> In the Library
+        panel (left), click <code>…</code> and choose a folder. Its audio files
+        appear in the tree; the search box filters by name.</li>
+      <li><strong>Load a clip.</strong> Drag a file from the library onto any
+        grid cell — or right-click a cell and choose
+        <em>Load audio…</em>.</li>
+      <li><strong>Start the clock.</strong> Press <kbd>Space</kbd> or click
+        <strong>▶ PLAY</strong>. The four beat dots on the transport bar pulse
+        with the bar.</li>
+      <li><strong>Launch the clip.</strong> Click the cell (or hit its
+        controller pad). It arms <span class="state amber"></span> amber and fires at the
+        next quantize boundary, turning <span class="state green"></span> green
+        while playing.</li>
+      <li><strong>Stop it.</strong> Click the playing cell again
+        (<span class="state red"></span> red = stopping at the boundary), use
+        the track's clip-stop button, or <kbd>Shift</kbd>+<kbd>Space</kbd> to
+        stop everything.</li>
+    </ol>
+    <div class="callout tip">
+      <span class="label">Tip</span>
+      A cell keeps its trim, pitch, gain, envelope, loop mode, color, and LFO
+      settings, and all of that is saved with your set
+      (<a href="#sets">Sets &amp; persistence</a>).
+    </div>
+  </section>
+
+  <section id="interface">
+    <h2>The interface</h2>
+    <table>
+      <thead><tr><th>Region</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>Brand rail (far left)</td>
+          <td>The vertical Kandecksky column. Purely decorative — blue, yellow,
+          red, top to bottom.</td></tr>
+        <tr><td>Transport bar (top)</td>
+          <td>Clock controls on the left (PLAY, STOP, Bounce, BPM, TAP, GEN,
+          beat dots); mode and settings buttons on the right (sync badge, LIM,
+          RES, SETS, MACRO, MIDI, OUTPUT, PALETTE, SAVE, LOAD, HELP).</td></tr>
+        <tr><td>Library panel</td>
+          <td>Folder tree of your samples with search. Drag files onto cells or
+          the Punktkunstwerk drop zone. Collapsible with <code>◀</code>.</td></tr>
+        <tr><td>Clip grid</td>
+          <td>Tracks in columns, scenes in rows — the same 8×5 bank a grid
+          controller presents. Scene-launch buttons sit at the right end of
+          each row.</td></tr>
+        <tr><td>Punktkunstwerk</td>
+          <td>The first column: a permanent granular instrument instead of a
+          clip track (<a href="#punktkunstwerk">details</a>).</td></tr>
+        <tr><td>Faders row</td>
+          <td>Per-track volume faders plus the MAIN master fader. Each track
+          header also carries its FX and MIDI buttons.</td></tr>
+        <tr><td>Status bar (bottom)</td>
+          <td>Contextual hints and the current launch-quantize setting.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="transport">
+    <h2>Transport &amp; clock</h2>
+    <h3>Controls</h3>
+    <table>
+      <thead><tr><th>Control</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><strong>▶ PLAY</strong> / <kbd>Space</kbd></td>
+          <td>Start the master clock. Queued clips fire on their boundaries.</td></tr>
+        <tr><td><strong>■ STOP</strong> / <kbd>Shift</kbd>+<kbd>Space</kbd></td>
+          <td>Stop the clock and all playing clips.</td></tr>
+        <tr><td><strong>⏺ Bounce</strong></td>
+          <td>Record the master output while playing; writes a WAV when you
+          stop (<a href="#record-export">Recording &amp; export</a>).</td></tr>
+        <tr><td><strong>BPM</strong></td>
+          <td>Master tempo, 40–300 BPM, editable to 0.1. Tempo-synced clips
+          re-stretch to follow.</td></tr>
+        <tr><td><strong>TAP</strong> / <kbd>T</kbd></td>
+          <td>Tap tempo.</td></tr>
+        <tr><td><strong>GEN</strong> / <kbd>G</kbd></td>
+          <td>Toggle the <a href="#generative">generative engine</a>.</td></tr>
+        <tr><td>Beat dots</td>
+          <td>Four dots pulse one per beat, in Kandinsky colors.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Launch quantize</h3>
+    <p>
+      Clip launches and stops resolve on a beat boundary:
+      <em>Immediate</em>, <em>½ bar</em>, <em>1 bar</em> (default),
+      <em>2 bars</em>, or <em>4 bars</em>. Set it in
+      <strong>⚙ MIDI → Launch Quantize</strong>; the current value is always
+      shown in the status bar, and a MIDI Learn target can cycle it from
+      hardware.
+    </p>
+
+    <h3>Sync sources</h3>
+    <p>The badge next to the transport buttons shows who owns the clock:</p>
+    <table>
+      <thead><tr><th>Badge</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td><strong>INT</strong></td>
+          <td>Internal free-running clock (default).</td></tr>
+        <tr><td><strong>MIDI CLK</strong></td>
+          <td>Kandecksky follows incoming MIDI Clock (24 PPQN) from the device
+          selected in ⚙ MIDI.</td></tr>
+        <tr><td><strong>OSC</strong></td>
+          <td>Kandecksky follows BPM and play/stop sent by a DAW over OSC
+          (<a href="#osc">OSC &amp; DAW integration</a>).</td></tr>
+        <tr><td><strong>LINK</strong></td>
+          <td>Ableton Link — tempo and start/stop shared with every Link-aware
+          app on the network (see below). The badge shows the peer count,
+          e.g. <em>LINK 2</em>.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Kandecksky can also be the <strong>master</strong>: enable
+      <em>MIDI Clock Out</em> in ⚙ MIDI to send 24 PPQN clock plus
+      START/STOP to a DAW or hardware on a chosen output port.
+    </p>
+    <h3>Ableton Link</h3>
+    <p>
+      Choose sync source <em>Ableton Link</em> in ⚙ MIDI to join a Link
+      session. Unlike MIDI Clock's master/slave split, Link is peer-to-peer:
+      any participant can change the session tempo, and everyone follows.
+      Kandecksky follows session tempo and start/stop, and proposes its own
+      BPM edits, tap tempo, and transport changes back to the session. There
+      is nothing to set up; Link peers on the same network find each other on
+      their own.
+    </p>
+  </section>
+
+  <section id="clip-grid">
+    <h2>Clip grid</h2>
+    <h3>Launching</h3>
+    <ul>
+      <li><strong>Click a loaded cell</strong> to queue it. It shows
+        <span class="state amber"></span> amber while queued, then
+        <span class="state green"></span> green when playing. Clicking a
+        playing cell queues a stop — <span class="state red"></span> red until
+        the boundary.</li>
+      <li><strong>Scene launch</strong> — the button at the right end of a row
+        fires every loaded clip in that row at once.</li>
+      <li><strong>Clip-stop</strong> — each track has a stop button beneath the
+        grid; the transport's ■ STOP stops all tracks.</li>
+      <li><strong>One clip per track</strong> — launching a clip on a track
+        replaces whatever that track was playing, at the boundary.</li>
+    </ul>
+
+    <h3>Immediate-play gestures</h3>
+    <ul>
+      <li><strong>Slip mode</strong> — press and <em>hold</em> a pad (or cell)
+        for 200&nbsp;ms: the clip plays immediately, bypassing quantize.
+        Releasing leaves it playing.</li>
+      <li><strong>Stutter</strong> — hold <kbd>Shift</kbd> and hold a
+        <em>playing</em> pad: the last ⅛&nbsp;note repeats in sync for as long
+        as you hold. Release to continue normally.</li>
+    </ul>
+
+    <h3>Loop mode, badges &amp; colors</h3>
+    <ul>
+      <li>Cells are <strong>loops</strong> (<code>∞</code> badge) or
+        <strong>one-shots</strong> (<code>1</code> badge) — toggle in the
+        right-click menu.</li>
+      <li>A <strong>BPM badge</strong> appears when a clip is tempo-synced; a
+        teal <strong>key badge</strong> shows the detected musical key; a
+        <strong>pitch badge</strong> (e.g. <code>+2st</code>) shows transposition.</li>
+      <li><strong>Set color…</strong> in the right-click menu assigns a cell
+        color, shown as the cell's left border and mirrored on the pad LED
+        where the controller supports it (APC20: red / green / amber).</li>
+      <li><strong>Follow actions</strong> — a one-shot can automatically
+        trigger the <em>next</em> clip, a <em>random</em> clip, or <em>loop
+        back</em> when it ends (set in the waveform editor).</li>
+      <li><strong>Hot-swap</strong> — drop a new file on a playing cell: it
+        preloads in the background and swaps in at the next bar without
+        interrupting playback.</li>
+    </ul>
+
+    <h3>Right-click menu</h3>
+    <p>
+      <em>Load audio…</em>, loop/one-shot toggle, <em>Set clip BPM</em> and
+      <em>Sync to Global BPM</em>, <em>Auto-trim silence</em>,
+      <em>Export clip…</em>, <em>Set color…</em>, and <em>Clear clip</em>.
+    </p>
+  </section>
+
+  <section id="waveform-editor">
+    <h2>Waveform editor</h2>
+    <p>
+      <strong>Double-click any loaded cell</strong> to open its editor. All
+      edits apply in real time — most take effect at the next loop pass or
+      relaunch.
+    </p>
+    <table>
+      <thead><tr><th>Control</th><th>Range</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Trim in / out</td><td>anywhere in the file</td>
+          <td>Drag the handles on the waveform, or type exact seconds.</td></tr>
+        <tr><td>Cue points</td><td>named markers</td>
+          <td>Set named positions inside the clip; markers draw on the
+          waveform. The active cue overrides trim start on launch.</td></tr>
+        <tr><td>Clip BPM</td><td>free entry</td>
+          <td>Tag the clip's native tempo. When synced, the engine
+          time-stretches it to the master BPM — pitch preserved.</td></tr>
+        <tr><td>Pitch</td><td>−24 … +24 st</td>
+          <td>Semitone transposition, independent of tempo. The editor shows
+          the detected key and what it becomes as you drag.</td></tr>
+        <tr><td>Reverse</td><td>on/off</td>
+          <td>Plays the sample backwards; composable with pitch and BPM sync.</td></tr>
+        <tr><td>Crossfade loop</td><td>0–500 ms</td>
+          <td>Blends the loop's tail into its head so the loop point
+          doesn't click.</td></tr>
+        <tr><td>Attack / Release</td><td>0–5000 ms</td>
+          <td>Per-clip envelope applied in the engine.</td></tr>
+        <tr><td>Clip gain</td><td>−24 … +12 dB</td>
+          <td>Per-clip gain staging before the track fader.</td></tr>
+        <tr><td>Follow action</td><td>None / Next / Random / Loop back</td>
+          <td>What happens when a one-shot ends.</td></tr>
+        <tr><td>LFO</td><td>see below</td>
+          <td>Per-clip modulation, synced to the clock.</td></tr>
+      </tbody>
+    </table>
+    <h3>Per-clip LFO</h3>
+    <p>
+      Enable the LFO to modulate <strong>volume</strong> or
+      <strong>pitch</strong> with a <strong>sine</strong> or
+      <strong>triangle</strong> wave. Rate is tempo-synced, from ¼ bar to
+      4 bars, and depth runs 0–1.
+    </p>
+  </section>
+
+  <section id="punktkunstwerk">
+    <h2>Punktkunstwerk — the granular track</h2>
+    <p>
+      The first column is not a clip track: it is a permanent granular
+      instrument that plays one sample as a cloud of short, overlapping grains.
+      It's what you reach for when you want a spectral freeze, an endless
+      texture pad, or a rhythm warped into something else entirely. Drop a
+      sample on its <em>drop a sample</em> zone (or drag from the library),
+      then press its <strong>▶ PLAY</strong>.
+    </p>
+    <table>
+      <thead><tr><th>Knob</th><th>Range</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>POS</strong></td><td>0–100%</td>
+          <td>Read position in the sample.</td></tr>
+        <tr><td><strong>SIZE</strong></td><td>5–500 ms</td>
+          <td>Grain length.</td></tr>
+        <tr><td><strong>DENS</strong></td><td>1–32</td>
+          <td>Simultaneous grains. Output is normalized by density, so high
+          counts don't clip.</td></tr>
+        <tr><td><strong>SPRY</strong></td><td>1–500 ms</td>
+          <td>Random scatter of each grain's start around POS.</td></tr>
+        <tr><td><strong>P.SC</strong></td><td>0–12 st</td>
+          <td>Random per-grain pitch scatter.</td></tr>
+        <tr><td><strong>RATE</strong></td><td>−2× … +2×</td>
+          <td>Scan speed: the position cursor traverses the sample; negative
+          scans in reverse; 0 holds still.</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>FREEZE</strong> locks the position cursor — hold any instant
+        of the sample as an infinite pad.</li>
+      <li><strong>Scan Bars</strong> (Off / 1 / 2 / 4 / 8 bars) tempo-syncs the
+        scan: the cursor covers the whole sample in exactly that many bars at
+        the current BPM, and keeps up when the BPM changes.</li>
+      <li>Each grain is shaped by a Hann envelope, so the output stays
+        click-free whatever the settings.</li>
+      <li>The granular voice runs through the track's full FX chain and fader,
+        and all of its parameters are MIDI Learn targets.</li>
+    </ul>
+  </section>
+
+  <section id="mixer-fx">
+    <h2>Mixer &amp; FX</h2>
+    <h3>Levels</h3>
+    <ul>
+      <li>Per-track <strong>volume faders</strong> with peak VU meters
+        (instant attack, ~300 ms decay).</li>
+      <li><strong>MAIN</strong> — master fader.</li>
+      <li><strong>LIM</strong> — master brickwall limiter at −1 dBFS. Leave it
+        on for live sets.</li>
+    </ul>
+    <h3>Per-track FX chain</h3>
+    <p>Open with the FX button on a track header. Signal flows EQ → compressor
+       → delay → reverb:</p>
+    <table>
+      <thead><tr><th>Effect</th><th>Parameters</th></tr></thead>
+      <tbody>
+        <tr><td>3-band EQ</td>
+          <td>Lo shelf 200 Hz · mid peak 1 kHz (Q 0.7) · hi shelf 6 kHz.</td></tr>
+        <tr><td>Compressor</td>
+          <td>Threshold, ratio, attack, release, makeup gain.</td></tr>
+        <tr><td>Delay</td>
+          <td>Time (up to 4 s, BPM-synced divisions available), feedback, wet.</td></tr>
+        <tr><td>Reverb</td>
+          <td>Freeverb — wet, room size, damping.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="audio-output">
+    <h2>Audio output &amp; routing</h2>
+    <p>
+      Kandecksky owns its own audio device via the native engine — it does not
+      play through the browser layer. Open <strong>OUTPUT</strong> on the
+      transport bar to manage it:
+    </p>
+    <ul>
+      <li><strong>Device picker</strong> — choose any output device and click
+        <em>Connect</em>; <code>↻</code> rescans. The status line shows the
+        connected device, sample rate, and channel count.</li>
+      <li><strong>Per-track direct outs</strong> — on a multichannel device,
+        route individual tracks to their own channel pairs so a DAW can record
+        stems instead of just the stereo mix. <em>Reset to Default Routing</em>
+        puts everything back on the main pair.</li>
+    </ul>
+    <div class="callout tip">
+      <span class="label">Tip — recording stems into a DAW</span>
+      Route tracks to separate pairs of a virtual multichannel device (e.g.
+      BlackHole 16ch on macOS), then record those pairs as inputs in your DAW.
+    </div>
+  </section>
+
+  <section id="record-export">
+    <h2>Recording &amp; export</h2>
+    <ul>
+      <li><strong>⏺ Bounce</strong> — captures the master mix while the clock
+        runs; when you stop, it saves a WAV wherever you choose.</li>
+      <li><strong>RES (resample)</strong> — records the live master output
+        straight back into a grid cell, in real time. Sample the mix, then play
+        it as a clip.</li>
+      <li><strong>Export clip…</strong> — right-click a cell to save its audio
+        out as WAV.</li>
+    </ul>
+  </section>
+
+  <section id="generative">
+    <h2>Generative engine</h2>
+    <p>
+      Toggle with <strong>GEN</strong> or <kbd>G</kbd>. A per-track control
+      strip appears below the faders; each track gets a trigger mode plus
+      timing and probability shaping. Generative triggers bypass launch
+      quantize — they land exactly on their scheduled step.
+    </p>
+    <h3>Trigger modes</h3>
+    <table>
+      <thead><tr><th>Mode</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Random</td><td>Pick a random loaded clip each trigger.</td></tr>
+        <tr><td>Rotate</td><td>Cycle through loaded clips in order.</td></tr>
+        <tr><td>Euclidean</td><td>Björklund rhythm — N pulses over M steps,
+          with a phase offset.</td></tr>
+        <tr><td>Markov</td><td>Weighted next-clip choice with configurable
+          memory.</td></tr>
+        <tr><td>Step sequencer</td><td>16-step grid — left-click toggles a
+          step, right-click sets that step's clip target.</td></tr>
+      </tbody>
+    </table>
+    <h3>Per-track shaping</h3>
+    <p>
+      Division (1/16 → 2 bars) · clock multiply/divide (÷4 → ×4) ·
+      probability · swing (0–100%) · humanize (±ms) · ratchet (%) ·
+      euclidean phase · step condition (always / every 2–4 / odd / even) ·
+      density envelope (ramp probability from A→B over N bars).
+    </p>
+    <h3>Evolving patterns</h3>
+    <ul>
+      <li><strong>Call &amp; response</strong> — pair two tracks: when A fires,
+        B is muted for that beat, and vice versa.</li>
+      <li><strong>Pattern mutation</strong> — euclidean N/K drift toward target
+        values one step per bar.</li>
+      <li><strong>Cellular automata</strong> — a 1-D ring CA rule evolves the
+        16-step pattern every bar.</li>
+    </ul>
+  </section>
+
+  <section id="performance">
+    <h2>Performance tools</h2>
+    <h3>Performance macros — MACRO</h3>
+    <p>
+      Map a single MIDI CC to several parameters at once: track volumes, FX
+      sends, grain controls, each with its own range. A spare knob on your
+      controller is the obvious candidate. Build macros in the MACRO modal;
+      they persist across sessions.
+    </p>
+    <h3>Set list mode — SETS</h3>
+    <p>
+      Queue multiple saved set files and step through them with
+      <em>Next ▶ / ◀ Prev</em> — or from hardware via a MIDI Learn target. The
+      list survives restarts.
+    </p>
+    <h3>Stutter &amp; slip</h3>
+    <p>
+      Covered in <a href="#clip-grid">Clip grid</a>: <kbd>Shift</kbd>+hold a
+      playing pad repeats the last ⅛ note; holding a pad 200 ms plays it
+      immediately without quantize.
+    </p>
+  </section>
+
+  <section id="midi">
+    <h2>MIDI &amp; controllers</h2>
+    <p>
+      Kandecksky is not tied to one piece of hardware. A <em>controller
+      profile</em> describes a device's factory pad/CC layout; MIDI Learn
+      overrides sit on top of whichever profile is active and always win.
+      Between the two, any common MIDI controller can drive the app.
+    </p>
+    <h3>Connecting</h3>
+    <p>
+      Open <strong>⚙ MIDI</strong>, pick the MIDI input and output (the
+      output is used for LED feedback where the hardware supports it), and
+      choose a <strong>Controller Profile</strong>. Connection and profile
+      persist — your controller reconnects automatically on every launch.
+    </p>
+    <h3>Controller profiles</h3>
+    <table>
+      <thead><tr><th>Profile</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Akai APC20</strong></td>
+          <td>The APC20's fixed factory layout, including full LED feedback
+          (table below).</td></tr>
+        <tr><td><strong>Generic pad controller</strong></td>
+          <td>Most pad/grid controllers: pads map chromatically from note 36
+          (the drum-rack convention), row by row across the 8×5 grid. Volume
+          faders on CC 7 (per channel), master on CC 14, knobs on CC 20–27.
+          Dedicated scene-launch / track-select / stop buttons aren't assumed
+          — bind those with MIDI Learn.</td></tr>
+        <tr><td><strong>None</strong></td>
+          <td>No factory layout at all: only MIDI Learn mappings (and the
+          mouse/keyboard) reach the grid. Ideal for keyboards, mixers, or any
+          controller whose layout matches neither profile — learn exactly the
+          controls you want.</td></tr>
+      </tbody>
+    </table>
+    <h3>APC20 profile layout</h3>
+    <table>
+      <thead><tr><th>Hardware</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td>8×5 pad bank (notes 0–39)</td>
+          <td>Clip grid. LEDs mirror state:
+            <span class="state green"></span> playing ·
+            <span class="state amber"></span> queued ·
+            <span class="state red"></span> stopping — or the cell's assigned
+            color when idle.</td></tr>
+        <tr><td>Scene buttons (82–86)</td><td>Launch a whole row.</td></tr>
+        <tr><td>Track faders (CC 7, ch 1–5)</td><td>Track volumes.</td></tr>
+        <tr><td>Master fader (CC 14)</td><td>Master volume.</td></tr>
+        <tr><td>Track select (64–68)</td><td>Track selection.</td></tr>
+        <tr><td>Clip stop (48–52)</td><td>Per-track stop.</td></tr>
+        <tr><td>Shift (98)</td><td>Stutter modifier and layout overrides.</td></tr>
+        <tr><td>Device knobs (CC 16–23)</td>
+          <td>Free — ideal for MIDI Learn and macros.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <span class="label">Note</span>
+      Note numbers can vary between firmware revisions — when in doubt, use
+      MIDI Learn to confirm what your unit sends.
+    </div>
+    <h3>MIDI Learn</h3>
+    <p>
+      There are 35 learnable targets, covering every control in the app:
+      transport, quantize cycling, all grain parameters, master and track
+      volumes, BPM, set-list advance, layout overrides. In ⚙ MIDI, choose a
+      target, click <em>Learn</em>, move your hardware control. Learned
+      mappings beat the active profile's layout, save immediately, and keep
+      working if you later switch profiles.
+    </p>
+    <h3>MIDI out</h3>
+    <ul>
+      <li><strong>Note out on clip fire</strong> — enable in ⚙ MIDI, then set
+        each track's channel and note via the track's MIDI button. Notes go
+        out on the dedicated <em>Note Out Port</em>.</li>
+      <li><strong>Virtual port</strong> — by default notes emit on a virtual
+        port named <em>Kandecksky Notes</em> that appears system-wide (macOS /
+        Linux). On Windows, install
+        <a href="https://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a>
+        and select it instead.</li>
+      <li><strong>MIDI Clock Out</strong> — Kandecksky as tempo master for a
+        DAW or hardware (24 PPQN + START/STOP on a chosen port).</li>
+    </ul>
+  </section>
+
+  <section id="osc">
+    <h2>OSC &amp; DAW integration</h2>
+    <h3>Receiving (DAW → Kandecksky)</h3>
+    <p>
+      With sync source <em>DAW OSC</em>, Kandecksky listens on UDP
+      (default port <code>9000</code>) for tempo and play/stop from the DAW —
+      the sync badge reads <strong>OSC</strong> and the master clock
+      follows.
+    </p>
+    <h3>Sending (Kandecksky → host)</h3>
+    <p>
+      Enable <em>OSC Send</em> in ⚙ MIDI (default target
+      <code>127.0.0.1:8000</code>). On every clip launch and stop Kandecksky
+      fires:
+    </p>
+    <ul>
+      <li><code>/clip/play&nbsp;&nbsp;i i s</code> — track, clip, name</li>
+      <li><code>/clip/stop&nbsp;&nbsp;i i</code> — track, clip</li>
+    </ul>
+    <p>
+      Use these to drive visuals, lighting, or DAW actions from your
+      performance.
+    </p>
+    <h3>Getting audio into a DAW</h3>
+    <p>
+      See <a href="#audio-output">Audio output &amp; routing</a> — pick a
+      virtual multichannel device and use per-track direct outs for stems.
+    </p>
+  </section>
+
+  <section id="sets">
+    <h2>Sets, set lists &amp; persistence</h2>
+    <ul>
+      <li><strong>SAVE / LOAD</strong> — a <em>set</em> is the whole session:
+        every cell's file reference and edits, Punktkunstwerk state, mixer and
+        FX settings. Saved as a JSON file wherever you choose.</li>
+      <li><strong>Set lists</strong> — queue several sets and step through them
+        live (<a href="#performance">Performance tools</a>).</li>
+      <li><strong>Preferences</strong> — MIDI connections, learned mappings,
+        macros, skin, UI zoom, OSC config, and the library root all persist
+        automatically in <code>prefs.json</code>; no save needed.</li>
+    </ul>
+    <div class="callout warn">
+      <span class="label">Heads-up</span>
+      Sets reference your audio files by path — they do not copy them. Moving
+      or deleting the source files breaks the set's clips.
+    </div>
+  </section>
+
+  <section id="appearance">
+    <h2>Palettes &amp; display</h2>
+    <ul>
+      <li><strong>PALETTE</strong> cycles the five looks: <em>cobalt</em> (default),
+        <em>vermillion</em>, <em>cadmium</em>, <em>canvas</em> (light), and
+        <em>dada</em> (randomized — <kbd>Shift</kbd>-click re-rolls it).
+        Palettes only recolor the decoration: green/amber/red clip states
+        always mean the same thing, and text stays readable in all five.</li>
+      <li><strong>UI zoom</strong> — <kbd>Ctrl</kbd>+<kbd>=</kbd> /
+        <kbd>Ctrl</kbd>+<kbd>−</kbd> scale the whole interface 70–200%
+        (crisp relayout, not stretching); <kbd>Ctrl</kbd>+<kbd>0</kbd> resets
+        to the 115% default. On macOS use <kbd>⌘</kbd>.</li>
+    </ul>
+  </section>
+
+  <section id="shortcuts">
+    <h2>Keyboard shortcuts</h2>
+    <table>
+      <thead><tr><th>Keys</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Space</kbd></td><td>Start clock / play</td></tr>
+        <tr><td><kbd>Shift</kbd>+<kbd>Space</kbd></td><td>Stop all</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Tap tempo</td></tr>
+        <tr><td><kbd>G</kbd></td><td>Toggle generative mode</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Open this user guide</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>−</kbd> / <kbd>0</kbd></td>
+          <td>UI zoom in / out / reset (<kbd>⌘</kbd> on macOS)</td></tr>
+        <tr><td>Double-click cell</td><td>Open waveform editor</td></tr>
+        <tr><td>Right-click cell</td><td>Clip menu</td></tr>
+        <tr><td>Hold cell/pad (200 ms)</td><td>Slip mode — play immediately</td></tr>
+        <tr><td><kbd>Shift</kbd>+hold playing pad</td><td>Stutter (⅛-note repeat)</td></tr>
+        <tr><td>Double-click track header</td><td>Rename track</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <h3>No sound</h3>
+    <ul>
+      <li>Open <strong>OUTPUT</strong> and confirm the right device is
+        connected — Kandecksky plays through its own stream, not the system
+        default the browser would use.</li>
+      <li>Check the cell is actually playing (green), the track fader and MAIN
+        are up, and the clock is running for quantized launches.</li>
+      <li>If the engine failed to start, the status line in OUTPUT reads
+        <em>Not connected</em> — pick a device and click Connect.</li>
+    </ul>
+    <h3>Recording captures silence (macOS)</h3>
+    <p>
+      macOS gates audio input behind the microphone permission. If you denied
+      the prompt, recording proceeds but captures silence. Grant access in
+      <em>System Settings → Privacy &amp; Security → Microphone</em>, then
+      relaunch.
+    </p>
+    <h3>"App can't be opened" (macOS)</h3>
+    <p>
+      Development builds are unsigned, so Gatekeeper blocks a plain
+      double-click. Right-click the app → <em>Open</em> → <em>Open</em>. One
+      time only.
+    </p>
+    <h3>Controller not responding</h3>
+    <ul>
+      <li>Re-select its ports in ⚙ MIDI — if it was unplugged, rescan by
+        reopening the modal.</li>
+      <li>Check the <strong>Controller Profile</strong>: if pads do nothing on
+        a non-APC20 device, try <em>Generic pad controller</em>, or
+        <em>None</em> plus MIDI Learn for the controls you need.</li>
+      <li>Make sure no other app has claimed the controller exclusively.</li>
+      <li>Pads light but don't match state? Select the correct MIDI
+        <em>output</em> — LEDs are driven over the output port.</li>
+    </ul>
+    <h3>No virtual MIDI port (Windows)</h3>
+    <p>
+      Windows has no native virtual MIDI ports. Install
+      <a href="https://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a>
+      and choose it as the Note Out Port.
+    </p>
+    <h3>Clicks when changing BPM</h3>
+    <p>
+      Tempo-synced clips restart from their loop start with a new stretch when
+      the BPM changes; a brief click at that boundary is expected behavior.
+    </p>
+  </section>
+
+</main>
+</body>
+</html>
