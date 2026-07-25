@@ -218,7 +218,7 @@
     <a class="btn ghost" href="guide/">User Guide</a>
   </div>
   <figure class="shot">
-    <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" height="832">
+    <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" />
     <figcaption>The Plantilpunkt granular track, clip grid, and per-track mixer.</figcaption>
   </figure>
 </header>
@@ -325,15 +325,12 @@
 
 <script>
 // ---------------------------------------------------------------------------
-// Store configuration. The installers are not hosted here — the build repo is
-// private, so its release assets are not publicly fetchable. Point `checkout`
-// at the product page that sells and delivers them (Gumroad, Lemon Squeezy,
-// Paddle, Stripe…), and `library` at wherever existing buyers re-download.
-// Leave `checkout` null to keep the page in its pre-launch state.
+// Store configuration. Leave `checkout` null to keep the page in its
+// pre-launch state.
 // ---------------------------------------------------------------------------
 const STORE = {
-  checkout: null,      // e.g. 'https://differentjason.gumroad.com/l/kandecksky'
-  library:  null,      // e.g. 'https://app.gumroad.com/library'
+  checkout: null,
+  library:  null,
   price:    '$39',
 };
 

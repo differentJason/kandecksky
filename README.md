@@ -22,23 +22,10 @@ will overwrite them. The guide's source of truth is `src/renderer/help/` in
 
 ## Store links
 
-Purchase links are configured in one place: the `STORE` object in the script
-block at the bottom of `index.html`.
-
-```js
-const STORE = {
-  checkout: null,   // product/checkout URL
-  library:  null,   // where existing buyers re-download
-  price:    '$39',
-};
-```
-
-While `checkout` is `null` the buy buttons render as a disabled "Coming soon"
-state and prices are hidden. Set it to go live.
+Purchase links are not yet configured — the site is in its pre-launch state.
 
 Installers are deliberately **not** hosted in this repo. They are built in the
-private repo and attached to its private releases; the store is what delivers
-them to buyers.
+private repo and attached to its private releases.
 
 ## Deploys
 
