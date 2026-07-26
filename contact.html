@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — The Noises Inside &amp; Kandecksky</title>
+  <meta name="description" content="Get in touch about The Noises Inside (booking, press, licensing) or Kandecksky (support, sales).">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/site.css">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style>
+    .contact-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-card .email-row,
+    .contact-card .socials {
+      justify-content: center;
+    }
+    .contact-card .socials-label { text-align: center; }
+    .email-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 22px;
+    }
+    .email-row code {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 15px;
+    }
+    .copy-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 14px;
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .copy-btn:hover { border-color: var(--accent); }
+    .copy-btn.copied { border-color: var(--k-blue); color: var(--k-blue); }
+    .socials { display: flex; gap: 14px; flex-wrap: wrap; }
+    .socials-label { color: var(--muted); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: block; }
+  </style>
+</head>
+<body>
+
+<div class="tri-stripe"></div>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">The Noises Inside</a>
+  <div class="links">
+    <a href="index.html">Music</a>
+    <a href="kandecksky.html">Software</a>
+    <a href="contact.html" aria-current="page">Contact</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </div>
+</nav>
+
+<header class="band-hero">
+  <h1 style="letter-spacing:2px">Contact</h1>
+  <p class="sub">Booking, press, and licensing for The Noises Inside, or
+    support and sales for Kandecksky — same inbox either way.</p>
+</header>
+
+<section>
+  <div class="contact-card">
+    <span class="socials-label">Email</span>
+    <div class="email-row">
+      <code id="email">jason@thenoisesinside.com</code>
+      <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+    </div>
+    <span class="socials-label">Elsewhere — @thenoisesinside</span>
+    <div class="socials">
+      <a class="icon-badge" href="https://www.instagram.com/thenoisesinside/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.06 1.17.06 2.2.24 3.03.57.87.34 1.6.8 2.31 1.51.71.71 1.17 1.44 1.51 2.31.33.83.51 1.86.57 3.03.06 1.25.06 1.65.06 4.85s0 3.6-.06 4.85c-.06 1.17-.24 2.2-.57 3.03a6.12 6.12 0 0 1-1.51 2.31 6.12 6.12 0 0 1-2.31 1.51c-.83.33-1.86.51-3.03.57-1.25.06-1.65.06-4.85.06s-3.6 0-4.85-.06c-1.17-.06-2.2-.24-3.03-.57a6.12 6.12 0 0 1-2.31-1.51 6.12 6.12 0 0 1-1.51-2.31c-.33-.83-.51-1.86-.57-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.06-4.85c.06-1.17.24-2.2.57-3.03a6.12 6.12 0 0 1 1.51-2.31A6.12 6.12 0 0 1 6.65 .3C7.48-.03 8.51-.21 9.68-.27 10.93-.33 11.33-.33 12-.33Zm0 2c-3.14 0-3.51 0-4.74.06-1.02.05-1.87.21-2.51.46-.63.24-1.11.55-1.6 1.04-.49.49-.8.97-1.04 1.6-.25.64-.41 1.49-.46 2.51C1.59 8.9 1.59 9.27 1.59 12s0 3.1.06 4.33c.05 1.02.21 1.87.46 2.51.24.63.55 1.11 1.04 1.6.49.49.97.8 1.6 1.04.64.25 1.49.41 2.51.46 1.23.06 1.6.06 4.74.06s3.51 0 4.74-.06c1.02-.05 1.87-.21 2.51-.46a4.12 4.12 0 0 0 1.6-1.04c.49-.49.8-.97 1.04-1.6.25-.64.41-1.49.46-2.51.06-1.23.06-1.6.06-4.33s0-3.1-.06-4.33c-.05-1.02-.21-1.87-.46-2.51a4.12 4.12 0 0 0-1.04-1.6 4.12 4.12 0 0 0-1.6-1.04c-.64-.25-1.49-.41-2.51-.46C15.51 1.87 15.14 1.87 12 1.87Zm0 4.6a5.53 5.53 0 1 1 0 11.06 5.53 5.53 0 0 1 0-11.06Zm0 2a3.53 3.53 0 1 0 0 7.06 3.53 3.53 0 0 0 0-7.06Zm5.7-3.9a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6Z"/></svg>
+      </a>
+      <a class="icon-badge" href="https://www.tiktok.com/@thenoisesinside" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2h-3.2v13.9c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.3 0 .6 0 .9.1V9.9a6.1 6.1 0 0 0-.9-.1A6.1 6.1 0 1 0 16.6 16V8.4c1.2.9 2.7 1.4 4.3 1.4V6.6c-2.4 0-4.3-1.9-4.3-4.6Z"/></svg>
+      </a>
+      <a class="icon-badge" href="https://www.threads.net/@thenoisesinside" target="_blank" rel="noopener" aria-label="Threads">
+        <span aria-hidden="true">@</span>
+      </a>
+      <a class="icon-badge" href="https://youtube.com/@thenoisesinside" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.5s-.23-1.64-.94-2.36c-.9-.94-1.9-.95-2.36-1C16.9 3 12 3 12 3h-.01s-4.9 0-8.2.14c-.46.05-1.46.06-2.36 1C.63 4.86.4 6.5.4 6.5S.15 8.42.15 10.35v1.28c0 1.93.25 3.85.25 3.85s.23 1.64.94 2.36c.9.94 2.08.91 2.6 1.01 1.89.18 8.06.14 8.06.14s4.9-.01 8.2-.15c.46-.06 1.46-.07 2.36-1.01.71-.72.94-2.36.94-2.36s.25-1.92.25-3.85v-1.28c0-1.93-.25-3.85-.25-3.85ZM9.7 14.9V8.6l6.1 3.15-6.1 3.15Z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="index.html">The Noises Inside (music)</a> ·
+    <a href="kandecksky.html">Kandecksky (software)</a>
+  </div>
+  <div style="margin-top:8px">The Noises Inside &amp; Kandecksky — point, line, and plane, at 120 BPM.</div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(() => {
+  const email = document.getElementById('email').textContent.trim();
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 1600);
+    } catch (_) {
+      copyBtn.textContent = 'Select & copy manually';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

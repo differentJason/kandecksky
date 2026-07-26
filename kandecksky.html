@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kandecksky — live-performance clip launcher &amp; granular instrument</title>
+  <meta name="description" content="A live-performance audio looper: clip grid, granular engine, generative sequencing, Ableton Link, and a Rust-native audio core. macOS, Linux, Windows.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/site.css">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+
+<div class="tri-stripe"></div>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">The Noises Inside</a>
+  <div class="links">
+    <a href="index.html">Music</a>
+    <a href="kandecksky.html" aria-current="page">Software</a>
+    <a href="contact.html">Contact</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </div>
+</nav>
+
+<header class="k-hero">
+  <div class="logo-row">
+    <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
+      <circle cx="14" cy="14" r="12" fill="none" stroke="#1255b8" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="7"  fill="none" stroke="#e8c020" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="2.5" fill="#cc2b14"/>
+    </svg>
+    <h1>Kandecksky</h1>
+    <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
+      <circle cx="14" cy="14" r="12" fill="none" stroke="#cc2b14" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="7"  fill="none" stroke="#1255b8" stroke-width="2.5"/>
+      <circle cx="14" cy="14" r="2.5" fill="#e8c020"/>
+    </svg>
+  </div>
+  <p class="tagline">A live-performance clip launcher and granular instrument,
+    with a Rust-native audio engine.</p>
+  <p class="sub">For macOS, Linux, and Windows. Works with any MIDI grid
+    controller, or just the mouse and keyboard. Built by the same person who
+    makes <a href="index.html">the music</a>.</p>
+  <div class="cta-row">
+    <a class="btn primary" href="#downloads">Get Kandecksky</a>
+    <a class="btn ghost" href="guide/">User Guide</a>
+  </div>
+  <figure class="shot">
+    <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" />
+    <figcaption>The Plantilpunkt granular track, clip grid, and per-track mixer.</figcaption>
+  </figure>
+</header>
+
+<section id="features">
+  <h2>What it does</h2>
+  <div class="features">
+    <div class="card">
+      <h3>Clip grid, quantized</h3>
+      <p>Click a cell and it fires on the beat: instant, ½ bar, or up to
+      4 bars. Scene launch fires a whole row. You can hot-swap a file onto a
+      playing cell, chain clips with follow actions, and there are stutter
+      and slip gestures on the pads.</p>
+    </div>
+    <div class="card">
+      <h3>Granular instrument</h3>
+      <p>Drop a sample on the dedicated granular track and it plays back as a
+      cloud of tiny grains. Freeze the spectrum, scan through the file in
+      time with the tempo, scatter the pitch. It never clicks, and every
+      knob takes MIDI Learn.</p>
+    </div>
+    <div class="card">
+      <h3>Rust-native audio engine</h3>
+      <p>Audio never touches the browser layer. Playback, time-stretching
+      (WSOLA, pitch-preserving), per-track EQ, compression, delay, reverb,
+      and a brickwall limiter all run in a native engine with its own
+      low-latency device stream.</p>
+    </div>
+    <div class="card">
+      <h3>Generative sequencing</h3>
+      <p>Euclidean rhythms, Markov chains, a step sequencer, call &amp;
+      response, pattern mutation, cellular automata. Switch it on and the
+      grid keeps itself busy while you mix.</p>
+    </div>
+    <div class="card">
+      <h3>Any controller</h3>
+      <p>Ships with profiles for the Akai APC20 and generic pad grids. Beyond
+      that, MIDI Learn covers every control in the app (35 targets), so odd
+      hardware is fine too. If your pads have LEDs, they follow clip
+      state.</p>
+    </div>
+    <div class="card">
+      <h3>Plays well with others</h3>
+      <p>Ableton Link for peer-to-peer tempo sync, MIDI Clock in and out, and
+      OSC tempo/transport with your DAW. Per-track multichannel direct outs
+      let you record stems rather than a stereo bounce.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <h2>Why this exists</h2>
+  <p style="max-width:720px">
+    I built Kandecksky because I didn't want to hassle with a full DAW just to
+    play loops live. It started as the smallest thing that could launch clips
+    on the beat, and then it kept growing until it was an instrument in its
+    own right. Now it feeds the DAW too: I perform in Kandecksky and record
+    the stems back into a session.
+  </p>
+  <p style="color:var(--muted); margin-top:10px">— J.</p>
+</section>
+
+<section id="downloads">
+  <h2>Get Kandecksky</h2>
+  <p id="release-line">One purchase covers all three platforms.</p>
+  <div class="dl-grid">
+    <div class="dl">
+      <h3>macOS</h3>
+      <div class="arch">Apple silicon (arm64) · macOS 10.12+</div>
+      <div class="price" data-price>—</div>
+      <a class="btn primary" data-buy>Buy</a>
+      <a class="alt" data-owned>Already bought? Downloads</a>
+    </div>
+    <div class="dl">
+      <h3>Linux</h3>
+      <div class="arch">x86_64 · AppImage or Debian package</div>
+      <div class="price" data-price>—</div>
+      <a class="btn primary" data-buy>Buy</a>
+      <a class="alt" data-owned>Already bought? Downloads</a>
+    </div>
+    <div class="dl">
+      <h3>Windows</h3>
+      <div class="arch">x64 installer</div>
+      <div class="price" data-price>—</div>
+      <a class="btn primary" data-buy>Buy</a>
+      <a class="alt" data-owned>Already bought? Downloads</a>
+    </div>
+  </div>
+  <p class="dl-note">
+    <strong>macOS:</strong> builds aren't notarized yet — see the
+    <a href="guide/#quick-start">install steps in the user guide</a> if
+    Gatekeeper blocks the first launch. <strong>MIDI note-out on
+    Windows</strong> additionally needs
+    <a href="https://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a>
+    for virtual ports.
+  </p>
+</section>
+
+<footer>
+  <div>
+    <a href="index.html">The Noises Inside (music)</a> ·
+    <a href="guide/">User Guide</a> ·
+    <a href="contact.html">Contact</a>
+  </div>
+  <div style="margin-top:8px">The Noises Inside &amp; Kandecksky — point, line, and plane, at 120 BPM.</div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Store configuration. Leave `checkout` null to keep the page in its
+// pre-launch state.
+// ---------------------------------------------------------------------------
+const STORE = {
+  checkout: 'https://buy.stripe.com/14A5kF1ob52oe4l3He1VK00',
+  library:  null,
+  price:    '$19.99',
+};
+
+(() => {
+  const set = (sel, fn) => document.querySelectorAll(sel).forEach(fn);
+
+  set('[data-price]', el => { el.textContent = STORE.price; });
+
+  if (STORE.checkout) {
+    set('[data-buy]', el => { el.href = STORE.checkout; });
+  } else {
+    set('[data-buy]', el => {
+      el.classList.add('disabled');
+      el.textContent = 'Coming soon';
+      el.removeAttribute('href');
+    });
+    set('[data-price]', el => { el.textContent = ''; });
+  }
+
+  if (STORE.library) {
+    set('[data-owned]', el => { el.href = STORE.library; });
+  } else {
+    set('[data-owned]', el => el.remove());
+  }
+})();
+
+// Version line. The private build repo publishes release.json here on each
+// tagged release, so this stays current without touching the page.
+(async () => {
+  const line = document.getElementById('release-line');
+  try {
+    const r = await fetch('release.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error(r.status);
+    const rel = await r.json();
+    // Parse as a local date: bare 'YYYY-MM-DD' is treated as UTC midnight,
+    // which renders a day early for anyone west of Greenwich.
+    const when = new Date(rel.date + 'T00:00:00').toLocaleDateString();
+    line.textContent =
+      `Current version: ${rel.version} — ${when}. One purchase covers all three platforms.`;
+  } catch (_) {
+    // Keep the static copy already in the markup.
+  }
+})();
+</script>
+
+</body>
+</html>

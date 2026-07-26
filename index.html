@@ -3,268 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Noises Inside — music &amp; Kandecksky software</title>
+  <title>The Noises Inside — music</title>
   <meta name="description" content="The Noises Inside: solo electronic rock / post-punk / post-industrial project by Jason Mehaffey. Also home of Kandecksky, a live-performance clip launcher and granular instrument.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <style>
-    :root {
-      --bg:      #0d0d0d;
-      --bg2:     #161616;
-      --bg3:     #1f1f1f;
-      --border:  #2e2e2e;
-      --text:    #e4e2dc;
-      --muted:   #8f8d86;
-      --k-blue:   #1255b8;
-      --k-yellow: #e8c020;
-      --k-red:    #cc2b14;
-      --accent:   #2a6fd4;
-      --tni-accent: #cc2b14;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    a { color: var(--accent); }
-
-    .tri-stripe {
-      height: 4px;
-      background: linear-gradient(to right,
-        var(--k-blue) 0%, var(--k-blue) 33.3%,
-        var(--k-yellow) 33.3%, var(--k-yellow) 66.6%,
-        var(--k-red) 66.6%, var(--k-red) 100%);
-    }
-
-    .topnav {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .topnav .brand {
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-size: 15px;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .topnav .links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      margin-left: 22px;
-    }
-    .topnav .links a:hover { color: var(--text); }
-
-    header {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 40px 24px 56px;
-      text-align: center;
-    }
-    header.band-hero h1 {
-      font-size: clamp(30px, 6vw, 50px);
-      font-weight: 900;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-    .band-hero .tagline {
-      font-size: clamp(16px, 2.2vw, 20px);
-      color: var(--text);
-      max-width: 620px;
-      margin: 14px auto 6px;
-      font-style: italic;
-    }
-    .band-hero .sub {
-      color: var(--muted);
-      max-width: 640px;
-      margin: 0 auto 28px;
-      font-size: 14.5px;
-    }
-    .cta-row {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-block;
-      padding: 12px 22px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      border: 1px solid var(--border);
-    }
-    .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .btn.primary:hover { background: #3a7fe4; }
-    .btn.ghost { background: var(--bg3); color: var(--text); }
-    .btn.ghost:hover { border-color: var(--accent); }
-    .btn.tni { background: var(--tni-accent); color: #fff; border-color: var(--tni-accent); }
-    .btn.tni:hover { background: #e0341a; }
-
-    .logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 14px;
-    }
-    header.k-hero h1 {
-      font-size: clamp(30px, 5.4vw, 46px);
-      font-weight: 900;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      background: linear-gradient(135deg,
-        var(--k-blue) 0%, var(--k-blue) 33%,
-        var(--k-yellow) 33%, var(--k-yellow) 66%,
-        var(--k-red) 66%, var(--k-red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
-
-    .shot {
-      max-width: 1080px;
-      margin: 36px auto 0;
-      padding: 0 24px;
-    }
-    .shot img {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: block;
-    }
-    .shot figcaption {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-      padding-top: 10px;
-    }
-
-    section {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 56px 24px 8px;
-    }
-    section.divider {
-      border-top: 1px solid var(--border);
-      padding-top: 64px;
-    }
-    h2 {
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 22px;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      border-top: 3px solid var(--k-blue);
-    }
-    .card:nth-child(3n+2) { border-top-color: var(--k-yellow); }
-    .card:nth-child(3n)   { border-top-color: var(--k-red); }
-    .card h3 { font-size: 16px; margin-bottom: 8px; }
-    .card p { color: var(--muted); font-size: 14px; }
-
-    .discog {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .discog a {
-      display: block;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--tni-accent);
-      border-radius: 6px;
-      padding: 12px 14px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 14.5px;
-      font-weight: 600;
-    }
-    .discog a:hover { border-color: var(--tni-accent); background: var(--bg3); }
-    .discog .year { color: var(--muted); font-weight: 400; font-size: 13px; }
-
-    .dl-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .dl {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px;
-      text-align: center;
-    }
-    .dl h3 { font-size: 17px; margin-bottom: 4px; }
-    .dl .arch { color: var(--muted); font-size: 12.5px; margin-bottom: 14px; }
-    .dl .btn { width: 100%; }
-    .dl .alt { display: block; margin-top: 10px; font-size: 13px; }
-    .dl-note {
-      color: var(--muted);
-      font-size: 13.5px;
-      margin-top: 18px;
-      border-left: 3px solid var(--k-yellow);
-      background: var(--bg2);
-      padding: 10px 14px;
-      border-radius: 0 4px 4px 0;
-    }
-    #release-line { color: var(--muted); font-size: 13.5px; margin-bottom: 18px; }
-    .dl .price {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-    .btn.disabled {
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    footer {
-      margin-top: 64px;
-      border-top: 1px solid var(--border);
-      padding: 26px 24px 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    footer a { margin: 0 10px; }
-  </style>
+  <link rel="stylesheet" href="assets/site.css">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
 
 <div class="tri-stripe"></div>
 
 <nav class="topnav">
-  <a class="brand" href="#home">The Noises Inside</a>
+  <a class="brand" href="index.html">The Noises Inside</a>
   <div class="links">
-    <a href="#music">Music</a>
-    <a href="#kandecksky">Software</a>
-    <a href="mailto:jason@thenoisesinside.com">Contact</a>
+    <a href="index.html" aria-current="page">Music</a>
+    <a href="kandecksky.html">Software</a>
+    <a href="contact.html">Contact</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">◐</button>
   </div>
 </nav>
 
@@ -283,209 +46,129 @@
 <section id="music">
   <h2>Music</h2>
   <div class="discog">
-    <a href="https://abovethesnowline.bandcamp.com/album/divis-ep" target="_blank" rel="noopener">Divisé <span class="year">EP, 2025 · w/ Above the Snow Line</span></a>
-    <a href="https://thenoisesinside.bandcamp.com/album/it-follows" target="_blank" rel="noopener">It follows</a>
-    <a href="https://thenoisesinside.bandcamp.com/album/6daysin" target="_blank" rel="noopener">6DAYSIN</a>
-    <a href="https://thenoisesinside.bandcamp.com/album/matter-to-waves" target="_blank" rel="noopener">matter to waves</a>
-    <a href="https://thenoisesinside.bandcamp.com/album/tinge-less-home" target="_blank" rel="noopener">Tinge less home</a>
-    <a href="https://thenoisesinside.bandcamp.com/album/on-moody-weaks" target="_blank" rel="noopener">On! Moody weaks</a>
-    <a href="https://thenoisesinside.bandcamp.com/track/canopies" target="_blank" rel="noopener">Canopies</a>
-    <a href="https://thenoisesinside.bandcamp.com/track/rckts" target="_blank" rel="noopener">rckts</a>
-    <a href="https://thenoisesinside.bandcamp.com/track/dreams-in-lifeboats" target="_blank" rel="noopener">Dreams (in lifeboats)</a>
-    <a href="https://thenoisesinside.bandcamp.com/track/forty-degrees-north-latitude" target="_blank" rel="noopener">forty degrees north latitude <span class="year">w/ Darpsyx</span></a>
-    <a href="https://thenoisesinside.bandcamp.com/track/asimpledancenumber" target="_blank" rel="noopener">Asimpledancenumber</a>
+    <a href="https://thenoisesinside.bandcamp.com/album/tinge-less-home" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/tinge-less-home.jpg" alt="Tinge less home cover art" loading="lazy">
+      <span class="title">Tinge less home</span><span class="year">Jul 2026</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/album/on-moody-weaks" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/on-moody-weaks.jpg" alt="On! Moody weaks cover art" loading="lazy">
+      <span class="title">On! Moody weaks</span><span class="year">May 2026</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/track/asimpledancenumber" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/asimpledancenumber.jpg" alt="Asimpledancenumber cover art" loading="lazy">
+      <span class="title">Asimpledancenumber</span><span class="year">Jan 2026</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/album/6daysin" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/6daysin.jpg" alt="6DAYSIN cover art" loading="lazy">
+      <span class="title">6DAYSIN</span><span class="year">Nov 2025</span>
+    </a>
+    <a href="https://abovethesnowline.bandcamp.com/album/divis-ep" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/divise.jpg" alt="Divisé cover art" loading="lazy">
+      <span class="title">Divisé</span><span class="year">Feb 2025 · w/ Above the Snow Line</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/track/canopies" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/canopies.jpg" alt="Canopies cover art" loading="lazy">
+      <span class="title">Canopies</span><span class="year">Dec 2024</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/track/rckts" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/rckts.jpg" alt="rckts cover art" loading="lazy">
+      <span class="title">rckts</span><span class="year">Nov 2024</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/track/dreams-in-lifeboats" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/dreams-in-lifeboats.jpg" alt="Dreams (in lifeboats) cover art" loading="lazy">
+      <span class="title">Dreams (in lifeboats)</span><span class="year">Aug 2024</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/track/forty-degrees-north-latitude" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/forty-degrees-north-latitude.jpg" alt="forty degrees north latitude cover art" loading="lazy">
+      <span class="title">forty degrees north latitude</span><span class="year">Jul 2024 · w/ Darpsyx</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/album/it-follows" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/it-follows.jpg" alt="It follows cover art" loading="lazy">
+      <span class="title">It follows</span><span class="year">Jun 2024</span>
+    </a>
+    <a href="https://thenoisesinside.bandcamp.com/album/matter-to-waves" target="_blank" rel="noopener">
+      <img class="art" src="assets/discog/matter-to-waves.jpg" alt="matter to waves cover art" loading="lazy">
+      <span class="title">matter to waves</span><span class="year">May 2024</span>
+    </a>
   </div>
   <p class="dl-note" style="margin-top:22px">
     Full catalog, streaming links, and merch are on
     <a href="https://thenoisesinside.bandcamp.com" target="_blank" rel="noopener">Bandcamp</a>.
-    For booking, press, or licensing: <a href="mailto:jason@thenoisesinside.com">jason@thenoisesinside.com</a>.
+    For booking, press, or licensing: <a href="contact.html">get in touch</a>.
   </p>
 </section>
 
-<section class="divider" id="kandecksky">
-  <header class="k-hero">
-    <div class="logo-row">
-      <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
-        <circle cx="14" cy="14" r="12" fill="none" stroke="#1255b8" stroke-width="2.5"/>
-        <circle cx="14" cy="14" r="7"  fill="none" stroke="#e8c020" stroke-width="2.5"/>
-        <circle cx="14" cy="14" r="2.5" fill="#cc2b14"/>
-      </svg>
-      <h1>Kandecksky</h1>
-      <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
-        <circle cx="14" cy="14" r="12" fill="none" stroke="#cc2b14" stroke-width="2.5"/>
-        <circle cx="14" cy="14" r="7"  fill="none" stroke="#1255b8" stroke-width="2.5"/>
-        <circle cx="14" cy="14" r="2.5" fill="#e8c020"/>
-      </svg>
-    </div>
-    <p class="tagline">A live-performance clip launcher and granular instrument,
-      with a Rust-native audio engine.</p>
-    <p class="sub">For macOS, Linux, and Windows. Works with any MIDI grid
-      controller, or just the mouse and keyboard. Built by the same person who
-      makes the music above.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="#downloads">Get Kandecksky</a>
-      <a class="btn ghost" href="guide/">User Guide</a>
-    </div>
-    <figure class="shot">
-      <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" />
-      <figcaption>The Plantilpunkt granular track, clip grid, and per-track mixer.</figcaption>
-    </figure>
-  </header>
-</section>
-
-<section id="features">
-  <h2>What it does</h2>
+<section class="divider" id="resources">
+  <h2>Resources for artists</h2>
+  <p style="max-width:720px; color:var(--muted); margin-bottom:20px">
+    A few rights organizations worth knowing about if you're an independent
+    musician. I'm an active member of ASCAP and The MLC; the rest are here
+    because other artists have asked me what they're missing.
+  </p>
   <div class="features">
-    <div class="card">
-      <h3>Clip grid, quantized</h3>
-      <p>Click a cell and it fires on the beat: instant, ½ bar, or up to
-      4 bars. Scene launch fires a whole row. You can hot-swap a file onto a
-      playing cell, chain clips with follow actions, and there are stutter
-      and slip gestures on the pads.</p>
+    <div class="card resource-card">
+      <div class="icon-row">
+        <div class="resource-logo" style="background:var(--k-blue)"><img src="assets/resources/ascap.svg" alt="ASCAP logo"></div>
+        <h3 style="margin:0">ASCAP</h3>
+        <span class="member-tag">Member</span>
+      </div>
+      <p>One of the three major U.S. performing rights organizations (PROs).
+      Collects and pays royalties when your songs are performed publicly —
+      radio, streaming, live, TV.</p>
+      <a href="https://www.ascap.com/" target="_blank" rel="noopener">ascap.com →</a>
     </div>
-    <div class="card">
-      <h3>Granular instrument</h3>
-      <p>Drop a sample on the dedicated granular track and it plays back as a
-      cloud of tiny grains. Freeze the spectrum, scan through the file in
-      time with the tempo, scatter the pitch. It never clicks, and every
-      knob takes MIDI Learn.</p>
+    <div class="card resource-card">
+      <div class="icon-row">
+        <div class="resource-logo" style="background:#f7f0e0"><img src="assets/resources/bmi.png" alt="BMI logo"></div>
+        <h3 style="margin:0">BMI</h3>
+      </div>
+      <p>The other major U.S. PRO and ASCAP's biggest alternative — same core
+      function, separate membership. You join one PRO per catalog, not both.</p>
+      <a href="https://www.bmi.com/" target="_blank" rel="noopener">bmi.com →</a>
     </div>
-    <div class="card">
-      <h3>Rust-native audio engine</h3>
-      <p>Audio never touches the browser layer. Playback, time-stretching
-      (WSOLA, pitch-preserving), per-track EQ, compression, delay, reverb,
-      and a brickwall limiter all run in a native engine with its own
-      low-latency device stream.</p>
+    <div class="card resource-card">
+      <div class="icon-row">
+        <div class="resource-logo" style="background:#f7f0e0"><img src="assets/resources/sesac.svg" alt="SESAC logo"></div>
+        <h3 style="margin:0">SESAC</h3>
+      </div>
+      <p>The third major U.S. PRO. Historically invite-only, now open to
+      submissions — worth a look if ASCAP or BMI don't feel like the right
+      fit.</p>
+      <a href="https://www.sesac.com/" target="_blank" rel="noopener">sesac.com →</a>
     </div>
-    <div class="card">
-      <h3>Generative sequencing</h3>
-      <p>Euclidean rhythms, Markov chains, a step sequencer, call &amp;
-      response, pattern mutation, cellular automata. Switch it on and the
-      grid keeps itself busy while you mix.</p>
+    <div class="card resource-card">
+      <div class="icon-row">
+        <div class="resource-logo" style="background:var(--k-blue)"><img src="assets/resources/mlc.svg" alt="The MLC logo"></div>
+        <h3 style="margin:0">The MLC</h3>
+        <span class="member-tag">Member</span>
+      </div>
+      <p>The Mechanical Licensing Collective. Collects mechanical royalties
+      from U.S. streaming services (Spotify, Apple Music, etc.) and pays
+      songwriters/publishers directly — created by the Music Modernization Act.</p>
+      <a href="https://www.themlc.com/" target="_blank" rel="noopener">themlc.com →</a>
     </div>
-    <div class="card">
-      <h3>Any controller</h3>
-      <p>Ships with profiles for the Akai APC20 and generic pad grids. Beyond
-      that, MIDI Learn covers every control in the app (35 targets), so odd
-      hardware is fine too. If your pads have LEDs, they follow clip
-      state.</p>
-    </div>
-    <div class="card">
-      <h3>Plays well with others</h3>
-      <p>Ableton Link for peer-to-peer tempo sync, MIDI Clock in and out, and
-      OSC tempo/transport with your DAW. Per-track multichannel direct outs
-      let you record stems rather than a stereo bounce.</p>
-    </div>
-  </div>
-</section>
-
-<section id="why">
-  <h2>Why this exists</h2>
-  <p style="max-width:720px">
-    I built Kandecksky because I didn't want to hassle with a full DAW just to
-    play loops live. It started as the smallest thing that could launch clips
-    on the beat, and then it kept growing until it was an instrument in its
-    own right. Now it feeds the DAW too: I perform in Kandecksky and record
-    the stems back into a session.
-  </p>
-  <p style="color:var(--muted); margin-top:10px">— Jason, who made this</p>
-</section>
-
-<section id="downloads">
-  <h2>Get Kandecksky</h2>
-  <p id="release-line">One purchase covers all three platforms.</p>
-  <div class="dl-grid">
-    <div class="dl">
-      <h3>macOS</h3>
-      <div class="arch">Apple silicon (arm64) · macOS 10.12+</div>
-      <div class="price" data-price>—</div>
-      <a class="btn primary" data-buy>Buy</a>
-      <a class="alt" data-owned>Already bought? Downloads</a>
-    </div>
-    <div class="dl">
-      <h3>Linux</h3>
-      <div class="arch">x86_64 · AppImage or Debian package</div>
-      <div class="price" data-price>—</div>
-      <a class="btn primary" data-buy>Buy</a>
-      <a class="alt" data-owned>Already bought? Downloads</a>
-    </div>
-    <div class="dl">
-      <h3>Windows</h3>
-      <div class="arch">x64 installer</div>
-      <div class="price" data-price>—</div>
-      <a class="btn primary" data-buy>Buy</a>
-      <a class="alt" data-owned>Already bought? Downloads</a>
+    <div class="card resource-card">
+      <div class="icon-row">
+        <div class="resource-logo" style="background:var(--accent); color:#fff; font-weight:800; font-size:13px">SX</div>
+        <h3 style="margin:0">SoundExchange</h3>
+      </div>
+      <p>Collects digital performance royalties from satellite radio and
+      webcasters, paid to recording artists and copyright owners — different
+      money than the PROs above, so it's worth registering separately.</p>
+      <a href="https://www.soundexchange.com/" target="_blank" rel="noopener">soundexchange.com →</a>
     </div>
   </div>
-  <p class="dl-note">
-    <strong>macOS:</strong> builds are not yet notarized — the first launch
-    needs right-click&nbsp;→&nbsp;Open. <strong>MIDI note-out on Windows</strong>
-    additionally needs <a href="https://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a>
-    for virtual ports. Details in the <a href="guide/">user guide</a>.
-  </p>
 </section>
 
 <footer>
   <div>
-    <a href="#music">Music</a> ·
-    <a href="guide/">User Guide</a> ·
-    <a href="mailto:jason@thenoisesinside.com">Contact</a>
+    <a href="kandecksky.html">Kandecksky (software)</a> ·
+    <a href="contact.html">Contact</a>
   </div>
   <div style="margin-top:8px">The Noises Inside &amp; Kandecksky — point, line, and plane, at 120 BPM.</div>
 </footer>
 
-<script>
-// ---------------------------------------------------------------------------
-// Store configuration. Leave `checkout` null to keep the page in its
-// pre-launch state.
-// ---------------------------------------------------------------------------
-const STORE = {
-  checkout: null,
-  library:  null,
-  price:    '$39',
-};
-
-(() => {
-  const set = (sel, fn) => document.querySelectorAll(sel).forEach(fn);
-
-  set('[data-price]', el => { el.textContent = STORE.price; });
-
-  if (STORE.checkout) {
-    set('[data-buy]', el => { el.href = STORE.checkout; });
-  } else {
-    set('[data-buy]', el => {
-      el.classList.add('disabled');
-      el.textContent = 'Coming soon';
-      el.removeAttribute('href');
-    });
-    set('[data-price]', el => { el.textContent = ''; });
-  }
-
-  if (STORE.library) {
-    set('[data-owned]', el => { el.href = STORE.library; });
-  } else {
-    set('[data-owned]', el => el.remove());
-  }
-})();
-
-// Version line. The private build repo publishes release.json here on each
-// tagged release, so this stays current without touching the page.
-(async () => {
-  const line = document.getElementById('release-line');
-  try {
-    const r = await fetch('release.json', { cache: 'no-cache' });
-    if (!r.ok) throw new Error(r.status);
-    const rel = await r.json();
-    // Parse as a local date: bare 'YYYY-MM-DD' is treated as UTC midnight,
-    // which renders a day early for anyone west of Greenwich.
-    const when = new Date(rel.date + 'T00:00:00').toLocaleDateString();
-    line.textContent =
-      `Current version: ${rel.version} — ${when}. One purchase covers all three platforms.`;
-  } catch (_) {
-    // Keep the static copy already in the markup.
-  }
-})();
-</script>
+<script src="assets/site.js"></script>
 
 </body>
 </html>
