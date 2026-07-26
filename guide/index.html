@@ -104,6 +104,23 @@
       settings, and all of that is saved with your set
       (<a href="#sets">Sets &amp; persistence</a>).
     </div>
+
+    <h3>Installing on macOS</h3>
+    <p>Kandecksky builds aren't notarized yet, so Gatekeeper blocks the first
+      launch. Right-click the app and choose <strong>Open</strong>, then
+      confirm.</p>
+    <div class="callout warn">
+      <span class="label">Still blocked?</span>
+      On macOS Sequoia and later, right-click alone sometimes isn't enough —
+      Apple moved the override into Settings. Go to
+      <strong>System Settings → Privacy &amp; Security</strong>, scroll to the
+      blocked-app message near the bottom, and click <strong>Open
+      Anyway</strong>, then confirm with your password or Touch ID.
+      In Safari, this link jumps straight there:
+      <a href="x-apple.systempreferences:com.apple.preference.security?Privacy_AllApps">Open Security Settings</a>.
+      In any other browser, run this in Terminal instead:
+      <code>open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllApps"</code>
+    </div>
   </section>
 
   <section id="interface">
