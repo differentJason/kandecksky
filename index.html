@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kandecksky — live-performance clip launcher &amp; granular instrument</title>
-  <meta name="description" content="A live-performance audio looper: clip grid, granular engine, generative sequencing, Ableton Link, and a Rust-native audio core. macOS, Linux, Windows.">
+  <title>The Noises Inside — music &amp; Kandecksky software</title>
+  <meta name="description" content="The Noises Inside: solo electronic rock / post-punk / post-industrial project by Jason Mehaffey. Also home of Kandecksky, a live-performance clip launcher and granular instrument.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -20,6 +20,7 @@
       --k-yellow: #e8c020;
       --k-red:    #cc2b14;
       --accent:   #2a6fd4;
+      --tni-accent: #cc2b14;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -39,44 +40,58 @@
         var(--k-red) 66.6%, var(--k-red) 100%);
     }
 
+    .topnav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topnav .brand {
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .topnav .links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 22px;
+    }
+    .topnav .links a:hover { color: var(--text); }
+
     header {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 64px 24px 40px;
+      padding: 40px 24px 56px;
       text-align: center;
     }
-    .logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 14px;
-    }
-    h1 {
-      font-size: clamp(34px, 6vw, 54px);
+    header.band-hero h1 {
+      font-size: clamp(30px, 6vw, 50px);
       font-weight: 900;
-      letter-spacing: 8px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      background: linear-gradient(135deg,
-        var(--k-blue) 0%, var(--k-blue) 33%,
-        var(--k-yellow) 33%, var(--k-yellow) 66%,
-        var(--k-red) 66%, var(--k-red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
-    .tagline {
-      font-size: clamp(16px, 2.4vw, 21px);
       color: var(--text);
-      max-width: 640px;
-      margin: 0 auto 8px;
     }
-    .sub {
+    .band-hero .tagline {
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: var(--text);
+      max-width: 620px;
+      margin: 14px auto 6px;
+      font-style: italic;
+    }
+    .band-hero .sub {
       color: var(--muted);
       max-width: 640px;
       margin: 0 auto 28px;
-      font-size: 15px;
+      font-size: 14.5px;
     }
     .cta-row {
       display: flex;
@@ -97,6 +112,30 @@
     .btn.primary:hover { background: #3a7fe4; }
     .btn.ghost { background: var(--bg3); color: var(--text); }
     .btn.ghost:hover { border-color: var(--accent); }
+    .btn.tni { background: var(--tni-accent); color: #fff; border-color: var(--tni-accent); }
+    .btn.tni:hover { background: #e0341a; }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    header.k-hero h1 {
+      font-size: clamp(30px, 5.4vw, 46px);
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg,
+        var(--k-blue) 0%, var(--k-blue) 33%,
+        var(--k-yellow) 33%, var(--k-yellow) 66%,
+        var(--k-red) 66%, var(--k-red) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
 
     .shot {
       max-width: 1080px;
@@ -121,6 +160,10 @@
       margin: 0 auto;
       padding: 56px 24px 8px;
     }
+    section.divider {
+      border-top: 1px solid var(--border);
+      padding-top: 64px;
+    }
     h2 {
       font-size: 26px;
       font-weight: 800;
@@ -142,6 +185,27 @@
     .card:nth-child(3n)   { border-top-color: var(--k-red); }
     .card h3 { font-size: 16px; margin-bottom: 8px; }
     .card p { color: var(--muted); font-size: 14px; }
+
+    .discog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .discog a {
+      display: block;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--tni-accent);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14.5px;
+      font-weight: 600;
+    }
+    .discog a:hover { border-color: var(--tni-accent); background: var(--bg3); }
+    .discog .year { color: var(--muted); font-weight: 400; font-size: 13px; }
 
     .dl-grid {
       display: grid;
@@ -195,33 +259,79 @@
 
 <div class="tri-stripe"></div>
 
-<header>
-  <div class="logo-row">
-    <svg width="44" height="44" viewBox="0 0 28 28" aria-hidden="true">
-      <circle cx="14" cy="14" r="12" fill="none" stroke="#1255b8" stroke-width="2.5"/>
-      <circle cx="14" cy="14" r="7"  fill="none" stroke="#e8c020" stroke-width="2.5"/>
-      <circle cx="14" cy="14" r="2.5" fill="#cc2b14"/>
-    </svg>
-    <h1>Kandecksky</h1>
-    <svg width="44" height="44" viewBox="0 0 28 28" aria-hidden="true">
-      <circle cx="14" cy="14" r="12" fill="none" stroke="#cc2b14" stroke-width="2.5"/>
-      <circle cx="14" cy="14" r="7"  fill="none" stroke="#1255b8" stroke-width="2.5"/>
-      <circle cx="14" cy="14" r="2.5" fill="#e8c020"/>
-    </svg>
+<nav class="topnav">
+  <a class="brand" href="#home">The Noises Inside</a>
+  <div class="links">
+    <a href="#music">Music</a>
+    <a href="#kandecksky">Software</a>
+    <a href="mailto:jason@thenoisesinside.com">Contact</a>
   </div>
-  <p class="tagline">A live-performance clip launcher and granular instrument,
-    with a Rust-native audio engine.</p>
-  <p class="sub">For macOS, Linux, and Windows. Works with any MIDI grid
-    controller, or just the mouse and keyboard.</p>
+</nav>
+
+<header class="band-hero" id="home">
+  <h1>The Noises Inside</h1>
+  <p class="tagline">"The Noises Inside make the music, you do the dissociation; we meet in the middle somewhere."</p>
+  <p class="sub">Solo electronic rock / post-punk / post-industrial project out of Virginia, written and
+    recorded by Jason Mehaffey (ex. The Others, japan::4). Reference points: Nine Inch Nails, Depeche
+    Mode, IAMX, Muse, Crosses, Deftones, Radiohead.</p>
   <div class="cta-row">
-    <a class="btn primary" href="#downloads">Get Kandecksky</a>
-    <a class="btn ghost" href="guide/">User Guide</a>
+    <a class="btn tni" href="https://thenoisesinside.bandcamp.com" target="_blank" rel="noopener">Listen on Bandcamp</a>
+    <a class="btn ghost" href="https://youtube.com/@thenoisesinside" target="_blank" rel="noopener">YouTube</a>
   </div>
-  <figure class="shot">
-    <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" />
-    <figcaption>The Plantilpunkt granular track, clip grid, and per-track mixer.</figcaption>
-  </figure>
 </header>
+
+<section id="music">
+  <h2>Music</h2>
+  <div class="discog">
+    <a href="https://abovethesnowline.bandcamp.com/album/divis-ep" target="_blank" rel="noopener">Divisé <span class="year">EP, 2025 · w/ Above the Snow Line</span></a>
+    <a href="https://thenoisesinside.bandcamp.com/album/it-follows" target="_blank" rel="noopener">It follows</a>
+    <a href="https://thenoisesinside.bandcamp.com/album/6daysin" target="_blank" rel="noopener">6DAYSIN</a>
+    <a href="https://thenoisesinside.bandcamp.com/album/matter-to-waves" target="_blank" rel="noopener">matter to waves</a>
+    <a href="https://thenoisesinside.bandcamp.com/album/tinge-less-home" target="_blank" rel="noopener">Tinge less home</a>
+    <a href="https://thenoisesinside.bandcamp.com/album/on-moody-weaks" target="_blank" rel="noopener">On! Moody weaks</a>
+    <a href="https://thenoisesinside.bandcamp.com/track/canopies" target="_blank" rel="noopener">Canopies</a>
+    <a href="https://thenoisesinside.bandcamp.com/track/rckts" target="_blank" rel="noopener">rckts</a>
+    <a href="https://thenoisesinside.bandcamp.com/track/dreams-in-lifeboats" target="_blank" rel="noopener">Dreams (in lifeboats)</a>
+    <a href="https://thenoisesinside.bandcamp.com/track/forty-degrees-north-latitude" target="_blank" rel="noopener">forty degrees north latitude <span class="year">w/ Darpsyx</span></a>
+    <a href="https://thenoisesinside.bandcamp.com/track/asimpledancenumber" target="_blank" rel="noopener">Asimpledancenumber</a>
+  </div>
+  <p class="dl-note" style="margin-top:22px">
+    Full catalog, streaming links, and merch are on
+    <a href="https://thenoisesinside.bandcamp.com" target="_blank" rel="noopener">Bandcamp</a>.
+    For booking, press, or licensing: <a href="mailto:jason@thenoisesinside.com">jason@thenoisesinside.com</a>.
+  </p>
+</section>
+
+<section class="divider" id="kandecksky">
+  <header class="k-hero">
+    <div class="logo-row">
+      <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" fill="none" stroke="#1255b8" stroke-width="2.5"/>
+        <circle cx="14" cy="14" r="7"  fill="none" stroke="#e8c020" stroke-width="2.5"/>
+        <circle cx="14" cy="14" r="2.5" fill="#cc2b14"/>
+      </svg>
+      <h1>Kandecksky</h1>
+      <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" fill="none" stroke="#cc2b14" stroke-width="2.5"/>
+        <circle cx="14" cy="14" r="7"  fill="none" stroke="#1255b8" stroke-width="2.5"/>
+        <circle cx="14" cy="14" r="2.5" fill="#e8c020"/>
+      </svg>
+    </div>
+    <p class="tagline">A live-performance clip launcher and granular instrument,
+      with a Rust-native audio engine.</p>
+    <p class="sub">For macOS, Linux, and Windows. Works with any MIDI grid
+      controller, or just the mouse and keyboard. Built by the same person who
+      makes the music above.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#downloads">Get Kandecksky</a>
+      <a class="btn ghost" href="guide/">User Guide</a>
+    </div>
+    <figure class="shot">
+      <img src="assets/screenshot.png" alt="Kandecksky main window: transport bar, granular track, clip grid, and mixer" width="1440" />
+      <figcaption>The Plantilpunkt granular track, clip grid, and per-track mixer.</figcaption>
+    </figure>
+  </header>
+</section>
 
 <section id="features">
   <h2>What it does</h2>
@@ -317,10 +427,11 @@
 
 <footer>
   <div>
+    <a href="#music">Music</a> ·
     <a href="guide/">User Guide</a> ·
-    <a href="mailto:jason.mehaffey@gmail.com">Support</a>
+    <a href="mailto:jason@thenoisesinside.com">Contact</a>
   </div>
-  <div style="margin-top:8px">Kandecksky — point, line, and plane, at 120 BPM.</div>
+  <div style="margin-top:8px">The Noises Inside &amp; Kandecksky — point, line, and plane, at 120 BPM.</div>
 </footer>
 
 <script>
